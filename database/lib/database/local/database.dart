@@ -1,45 +1,48 @@
-
+// import 'dart:ui';
 
 // import 'package:path/path.dart';
 // import 'package:sqflite/sqflite.dart';
-// import 'package:sqflite/sqlite_api.dart';
-
 
 // class DB{
+//   // DB._();
+//   // static DB instace = DB._();
 
-//   DB._();
+//   static final DB instace = DB._internal();
+//   static late Database _database;
+//   DB._internal();
 
-//   static final DB instance = DB._();
 
-//   static Database?_database;
+//    Future<Database> get database async{
 
-//   get database{
 
 //     if(_database != null){
-
 //       return _database;
 //     }
-
-//     _database = _initDatabase()
-// }
-
-//   Future<Database> _initDatabase() async {
-
-
-//     final pathData =   join(await getDatabasesPath(),'database.db');
-
-//     return openDatabase(
-//       pathData,
-//       version: 1,
-//       onCreate: _createDatabase
-//     );
+//     _database = await initialDatabase();
+//     return _database;
 //   } 
 
 
-//   Future _createDatabase(Database db, int version){
+//   Future<Database> initialDatabase() async{
 
-//     return await db.execute(sql);
+//     final path = join(await getDatabasesPath(),"database.bd");
+//     return await openDatabase(
+//       path,
+//       version: 1,
+//       onCreate:_onCreate
+//       ); 
+//   }
+//   Future<void >_onCreate(Database db, version) async{
+//     return await db.execute(
+//       """
+//          CREATE TEBLE user(
+//           id INTEGER PRIMARY KEY AUTOINCREMENT,
+//           name VARCHAR(300),
+//           phone VARCHAR(30)
+//          ) 
 
+//       """
+//       );
 //   }
 // }
-// // https://medium.com/@beccasaka/using-sqlite-in-flutter-3d5a10138090
+// // // https://medium.com/@beccasaka/using-sqlite-in-flutter-3d5a10138090
