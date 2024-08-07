@@ -1,9 +1,9 @@
 class User{
   final String name;
-  final String telefone;
+  final String phone;
 
   const User({
     required this.name,
-    required this.telefone
+    required this.phone
   });
 }

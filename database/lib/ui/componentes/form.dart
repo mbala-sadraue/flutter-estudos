@@ -1,12 +1,14 @@
+import 'package:database/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Formulario extends StatelessWidget {
  Formulario({super.key});
 
 
-  final  TextEditingController nomeController = TextEditingController();
-  final TextEditingController telefoneController = TextEditingController();
-
+  final  TextEditingController nameController =TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,17 +17,19 @@ class Formulario extends StatelessWidget {
           decoration: const InputDecoration(
             label: Text("Nome")
           ),
-          controller:nomeController ,
-        ),
+          controller:nameController , 
+             ),
          TextField(
           decoration: const InputDecoration(
             label: Text("Telefone")
           ),
-          controller:telefoneController ,
+          controller:phoneController ,
         ),
         ElevatedButton(onPressed: () {
-          print("Nome:${nomeController.text}");
-        }, child:  Text("cadastrar"))
+         userController.userCreate(nameController.text, phoneController.text);
+         nameController.clear();
+         phoneController.clear();
+        }, child: const  Text("cadastrar"))
       ],
     );
   }
