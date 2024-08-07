@@ -1,45 +1,45 @@
 
 
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
+// import 'package:path/path.dart';
+// import 'package:sqflite/sqflite.dart';
+// import 'package:sqflite/sqlite_api.dart';
 
 
-class DB{
+// class DB{
 
-  DB._();
+//   DB._();
 
-  static final DB instance = DB._();
+//   static final DB instance = DB._();
 
-  static Database?_database;
+//   static Database?_database;
 
-  get database{
+//   get database{
 
-    if(_database != null){
+//     if(_database != null){
 
-      return _database;
-    }
+//       return _database;
+//     }
 
-    _database = _initDatabase()
-}
+//     _database = _initDatabase()
+// }
 
-  Future<Database> _initDatabase() async {
-
-
-    final pathData =   join(await getDatabasesPath(),'database.db');
-
-    return openDatabase(
-      pathData,
-      version: 1,
-      onCreate: _createDatabase
-    );
-  } 
+//   Future<Database> _initDatabase() async {
 
 
-  Future _createDatabase(Database db, int version){
+//     final pathData =   join(await getDatabasesPath(),'database.db');
 
-    return await db.execute(sql);
+//     return openDatabase(
+//       pathData,
+//       version: 1,
+//       onCreate: _createDatabase
+//     );
+//   } 
 
-  }
-}
-// https://medium.com/@beccasaka/using-sqlite-in-flutter-3d5a10138090
+
+//   Future _createDatabase(Database db, int version){
+
+//     return await db.execute(sql);
+
+//   }
+// }
+// // https://medium.com/@beccasaka/using-sqlite-in-flutter-3d5a10138090
