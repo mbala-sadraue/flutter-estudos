@@ -7,7 +7,7 @@ class Formulario extends StatelessWidget{
   Widget build(BuildContext context ){
 
     return Container(
-      child: Text("Formulario"),
+      child: Text("Formulario 2"),
     );
 
   }
