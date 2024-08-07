@@ -30,10 +30,10 @@ class HomePage extends StatelessWidget{
       appBar: AppBar(
         title: Text(title),
       ),
-      body: const Center(
+      body:  Center(
         child: Column(
           children: [
-            Text("Lista"),
+            const Text("Lista"),
             Formulario()
           ],
         ),
