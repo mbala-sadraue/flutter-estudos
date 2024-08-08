@@ -30,7 +30,7 @@ class DB {
         CREATE TABLE ${UserFields.tableName} (
          ${UserFields.id} ${UserFields.idType},
          ${UserFields.name} ${UserFields.strType},
-         ${UserFields.phone} ${UserFields.strType},
+         ${UserFields.phone} ${UserFields.strType}
         )
       '''
     );
