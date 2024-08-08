@@ -10,4 +10,13 @@ class UserDatabase {
     final insert = db.insert(UserFields.tableName, values);
     return insert;
   }
+
+  Future<List<User>>  readAll() async{
+    final db = await DB.instance.database;
+    final result = await db.query(
+      UserFields.tableName,
+    );
+    return result.map( (json)=> User.fromJson(json) ).toList();
+
+  }   
 }
