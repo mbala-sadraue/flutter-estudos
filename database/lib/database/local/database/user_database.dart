@@ -11,7 +11,7 @@ class UserDatabase {
     return insert;
   }
 
-  Future<List<User>>  readAll() async{
+  static Future<List<User>>  readAll() async{
     final db = await DB.instance.database;
     final result = await db.query(
       UserFields.tableName,

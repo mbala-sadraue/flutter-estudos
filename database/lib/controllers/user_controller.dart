@@ -15,7 +15,19 @@ class UserController extends GetxController {
    final respo = await UserDatabase.userCreate(user);
 
     print("value $respo");
+    readAllUser();
 
     
+  }
+
+  void readAllUser() async{
+
+    final users = await  UserDatabase.readAll();
+
+    for(var user in users){
+
+      print("Nome: ${user.name}");
+    }
+
   }
 }
