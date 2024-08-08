@@ -1,7 +1,11 @@
+import 'package:database/controllers/user_controller.dart';
 import 'package:database/ui/componentes/form.dart';
+import 'package:database/ui/componentes/list_users.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 
-
+// Formulario
 
 void main(){
   runApp(const MyApp());
@@ -13,8 +17,13 @@ class MyApp extends StatelessWidget{
   
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(title: "Lista") ,
+    return  GetMaterialApp(
+      initialBinding: BindingsBuilder(
+        (){
+          Get.put(UserController());
+        }
+      ),
+      home: const HomePage(title: "Lista")
     );
   }
 }
@@ -30,13 +39,15 @@ class HomePage extends StatelessWidget{
       appBar: AppBar(
         title: Text(title),
       ),
-      body:  Center(
-        child: Column(
-          children: [
-            const Text("Lista"),
-            Formulario()
-          ],
-        ),
+      body:   Column(
+        children: [
+        const SizedBox(
+        width:double.infinity,
+        height: 230,
+        child: ListUsers(),
+      ),
+      Formulario()
+        ],
       ),
     );
   }

@@ -4,13 +4,25 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/state_manager.dart';
 import 'package:database/database/local/database/user_database.dart';
 class UserController extends GetxController {
+  
 
  static UserController get to => Get.find();
 
+  List<User> users = [];
+  
+  @override
+  void onInit(){
 
+    readAllUser();
+    super.onInit();
+  
+
+  }
+  
+  
   void userCreate(name, phone)async {
 
-    final User  user = User(name: name, phone: phone);
+  final User  user = User(name: name, phone: phone);
 
    final respo = await UserDatabase.userCreate(user);
 
@@ -22,12 +34,9 @@ class UserController extends GetxController {
 
   void readAllUser() async{
 
-    final users = await  UserDatabase.readAll();
+    users = await  UserDatabase.readAll();
 
-    for(var user in users){
-
-      print("Nome: ${user.name}");
-    }
+    update();
 
   }
 }
