@@ -1,48 +1,42 @@
-// import 'dart:ui';
+import 'package:database/database/local/sql/user_database.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
-// import 'package:path/path.dart';
-// import 'package:sqflite/sqflite.dart';
+class DB {
+  static final DB instance = DB._internal();
+  DB._internal();
+  static Database? _databese;
 
-// class DB{
-//   // DB._();
-//   // static DB instace = DB._();
+  Future<Database> get database async {
+    if (_databese != null) {
+      return _databese!;
+    }
 
-//   static final DB instace = DB._internal();
-//   static late Database _database;
-//   DB._internal();
+    _databese = await initialDatabase();
+    return _databese!;
+  }
+
+  Future<Database> initialDatabase() async {
+    final path = join(await getDatabasesPath(), 'kimbo.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate:_onCreate
+      );
+  }
+  Future<void> _onCreate(Database db, int versino) async{
+     await db.execute(
+      '''
+        CREATE TABLE ${UserFields.tableName} (
+         ${UserFields.id} ${UserFields.idType},
+         ${UserFields.name} ${UserFields.strType},
+         ${UserFields.phone} ${UserFields.strType},
+        )
+      '''
+    );
+
+  }
 
 
-//    Future<Database> get database async{
-
-
-//     if(_database != null){
-//       return _database;
-//     }
-//     _database = await initialDatabase();
-//     return _database;
-//   } 
-
-
-//   Future<Database> initialDatabase() async{
-
-//     final path = join(await getDatabasesPath(),"database.bd");
-//     return await openDatabase(
-//       path,
-//       version: 1,
-//       onCreate:_onCreate
-//       ); 
-//   }
-//   Future<void >_onCreate(Database db, version) async{
-//     return await db.execute(
-//       """
-//          CREATE TEBLE user(
-//           id INTEGER PRIMARY KEY AUTOINCREMENT,
-//           name VARCHAR(300),
-//           phone VARCHAR(30)
-//          ) 
-
-//       """
-//       );
-//   }
-// }
+}
 // // // https://medium.com/@beccasaka/using-sqlite-in-flutter-3d5a10138090
