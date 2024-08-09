@@ -42,5 +42,6 @@ class UserController extends GetxController {
 
   void deleteUser(int id) async{
     await UserDatabase.detele(id);
+    readAllUser();
   }
 }

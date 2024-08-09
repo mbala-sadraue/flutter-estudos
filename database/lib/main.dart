@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: const SizedBox(
+      body:  SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: ListUsers(),
