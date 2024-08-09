@@ -30,7 +30,7 @@ class UserDatabase {
 
   static Future<void> update(User user) async {
 
-
-
+    final db = await  DB.instance.database;
+    final result =  await db.update(UserFields.tableName, user.toJon());
   }
 }
