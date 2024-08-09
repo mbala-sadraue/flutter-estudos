@@ -6,31 +6,26 @@ import 'package:get/get.dart';
 
 // Formulario
 
-void main(){
+void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget{
-
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
-    return  GetMaterialApp(
-      initialBinding: BindingsBuilder(
-        (){
+    return GetMaterialApp(
+        initialBinding: BindingsBuilder(() {
           Get.put(UserController());
-        }
-      ),
-      home: const HomePage(title: "Lista")
-    );
+        }),
+        home: const HomePage(title: "Lista"));
   }
 }
 
-class HomePage extends StatelessWidget{
-
-    final String title;
-   const HomePage({super.key, required this.title});
+class HomePage extends StatelessWidget {
+  final String title;
+  const HomePage({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +36,26 @@ class HomePage extends StatelessWidget{
       body: const SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child:  ListUsers(),
+        child: ListUsers(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-
-              showModalBottomSheet(context: context, builder: (builder){
-                
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (builder) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: Formulario(),
                 );
               });
         },
         backgroundColor: Colors.white,
-        child: const Icon(Icons.add, color: Colors.green,),
-       ),
+        child: const Icon(
+          Icons.add,
+          color: Colors.green,
+        ),
+      ),
     );
   }
 }

@@ -15,8 +15,22 @@ class ListUsers extends StatelessWidget{
     itemBuilder: (context,index){
       final user = _.users[index];
       return   ListTile(
+        leading: const  CircleAvatar(
+          backgroundColor: Colors.red,
+        ),
         title: Text(user.name),
         subtitle: Text(user.phone),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+                 IconButton(onPressed: (){
+
+            }, icon:const  Icon(Icons.edit, color: Colors.orange)),
+               IconButton(onPressed: (){
+
+            }, icon:const  Icon(Icons.delete, color: Colors.red,))
+          ]
+          ,),
       );
     }
     );
