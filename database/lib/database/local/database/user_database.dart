@@ -17,6 +17,20 @@ class UserDatabase {
       UserFields.tableName,
     );
     return result.map( (json)=> User.fromJson(json) ).toList();
-
   }   
+
+  static Future<void> detele(int id) async{
+
+   final db = await  DB.instance.database;
+
+   final result = await db.delete(UserFields.tableName, where: '${UserFields.id} = ?',
+   whereArgs: [id]); 
+   print("result; $result");
+  }
+
+  static Future<void> update(User user) async {
+
+
+
+  }
 }

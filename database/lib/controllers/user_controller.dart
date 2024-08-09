@@ -25,11 +25,7 @@ class UserController extends GetxController {
   final User  user = User(name: name, phone: phone);
 
    final respo = await UserDatabase.userCreate(user);
-
-    print("value $respo");
     readAllUser();
-
-    
   }
 
   void readAllUser() async{
@@ -38,5 +34,13 @@ class UserController extends GetxController {
 
     update();
 
+  }
+
+  void updateUser(User user)  async{
+
+  }
+
+  void deleteUser(int id) async{
+    await UserDatabase.detele(id);
   }
 }
