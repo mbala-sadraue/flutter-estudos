@@ -3,7 +3,6 @@ import 'package:database/ui/componentes/form.dart';
 import 'package:database/ui/componentes/list_users.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 
 // Formulario
 
@@ -39,16 +38,25 @@ class HomePage extends StatelessWidget{
       appBar: AppBar(
         title: Text(title),
       ),
-      body:   Column(
-        children: [
-        const SizedBox(
-        width:double.infinity,
-        height: 230,
-        child: ListUsers(),
+      body: const SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child:  ListUsers(),
       ),
-      Formulario()
-        ],
-      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+
+              showModalBottomSheet(context: context, builder: (builder){
+                
+                return Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+                  child: Formulario(),
+                );
+              });
+        },
+        backgroundColor: Colors.white,
+        child: const Icon(Icons.add, color: Colors.green,),
+       ),
     );
   }
 }
