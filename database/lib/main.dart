@@ -13,12 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
-void showModalBottomSheet_ (BuildContext context){
-
-
-
- }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -33,28 +27,45 @@ class HomePage extends StatelessWidget {
   final String title;
   const HomePage({super.key, required this.title});
 
+  void showModalBottomSheet_(BuildContext context) {
+    // showModalBottomSheet(
+    //     context: context,
+    //     builder: (_) {
+    //       return Container(
+    //         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+    //         child: Formulario(),
+    //       );
+          
+    //     });
+
+    showDialog(context: context, builder: (_){
+      return AlertDialog(
+        scrollable: true,
+        clipBehavior: Clip.none,
+        shape: Border.all(width: 1, color: Colors.white),
+        title: const Center(child: Text("Cadastrar usuario",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),),
+        content:  Container(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Formulario(),
+          ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
-      body:  SizedBox(
+      body: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: ListUsers(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (builder) {
-                return Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  child: Formulario(),
-                );
-              });
+          showModalBottomSheet_(context);
         },
         backgroundColor: Colors.white,
         child: const Icon(

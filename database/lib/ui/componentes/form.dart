@@ -11,26 +11,47 @@ class Formulario extends StatelessWidget {
   final userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          decoration: const InputDecoration(
-            label: Text("Nome")
+    final _formKey  = GlobalKey<FormState>();
+    return SingleChildScrollView(
+      child: Form(
+      key: _formKey,
+      child: 
+      Column(
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(
+              label: Text("Nome")
+            ),
+            validator: (value){
+
+              if(value == null || value.isEmpty ){
+                return "O campo nome é obrigatorio";
+              }
+              return null;
+            },
+            controller:nameController , 
+               ),
+           TextFormField(
+            decoration: const InputDecoration(
+              label: Text("Telefone")
+            ),
+            validator: (value){
+              if(value == null || value.isEmpty){
+                return "O compo telefone é obrigatório";
+              }
+            },
+            controller:phoneController ,
           ),
-          controller:nameController , 
-             ),
-         TextField(
-          decoration: const InputDecoration(
-            label: Text("Telefone")
-          ),
-          controller:phoneController ,
-        ),
-        ElevatedButton(onPressed: () {
-         userController.userCreate(nameController.text, phoneController.text);
-         nameController.clear();
-         phoneController.clear();
-        }, child: const  Text("cadastrar"))
-      ],
+          ElevatedButton(onPressed: () {
+            if(_formKey.currentState!.validate()){
+
+           userController.userCreate(nameController.text, phoneController.text);
+           nameController.clear();
+           phoneController.clear();
+            }
+          }, child: const  Text("cadastrar"))
+        ],
+      )),
     );
   }
 
