@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:database/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 
 class ListUsers extends StatelessWidget {
    ListUsers({super.key});
@@ -16,8 +17,8 @@ class ListUsers extends StatelessWidget {
           itemBuilder: (context, index) {
             final user = _.users[index];
             return ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: Colors.red,
+              leading:  CircleAvatar(
+                backgroundImage:user.image != null? FileImage(File(user.image!)):null,
               ),
               title: Text(user.name),
               subtitle: Text(user.phone),

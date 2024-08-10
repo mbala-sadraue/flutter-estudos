@@ -23,9 +23,8 @@ class UserDatabase {
 
    final db = await  DB.instance.database;
 
-   final result = await db.delete(UserFields.tableName, where: '${UserFields.id} = ?',
+    await db.delete(UserFields.tableName, where: '${UserFields.id} = ?',
    whereArgs: [id]); 
-   print("result; $result");
   }
 
   static Future<void> update(User user) async {
