@@ -6,7 +6,7 @@ class UserDatabase {
  static  Future userCreate(User user) async {
     final db = await DB.instance.database;
 
-    final values = {'name': user.name, 'phone': user.phone};
+    final values = {'name': user.name, 'phone': user.phone,'image':user.image};
     final insert = db.insert(UserFields.tableName, values);
     return insert;
   }

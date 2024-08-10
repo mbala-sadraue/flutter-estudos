@@ -4,9 +4,11 @@ class User{
   final int? id;
   final String name;
   final String phone;
+  final String? image;
 
   const User({
     this.id,
+    this.image,
     required this.name,
     required this.phone
   });
@@ -14,6 +16,7 @@ class User{
   factory User.fromJson(Map<String, dynamic> json){
       return json.containsKey('id')?
        User(
+        image: json["image"] ?? '',
         name: json['name'], 
         phone: json['phone'],
         id:json['id']):  User(
