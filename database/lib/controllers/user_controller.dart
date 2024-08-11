@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:get/state_manager.dart';
@@ -65,4 +66,42 @@ class UserController extends GetxController {
     await UserDatabase.detele(id);
     readAllUser();
   }
+
+  // void tentarUpload( File image) async {
+
+  //   if( await Permission.storage.isGranted){
+
+  //   }
+
+  // }
 }
+class ContadorBloc{
+
+  StreamController<int>sink = StreamController();
+
+  ContadorBloc(this.sink);
+  Stream<int> get  stream{
+    return sink.stream;
+  }
+
+  set stream(value){
+
+    sink.add(value);
+
+  }
+
+  
+
+dispose(){
+  sink.close();
+}
+} 
+/***
+ * sink 
+ * 
+ * streamController  => filtro processamento
+ * 
+ * stream => fluxo
+ * 
+ * * */
+
