@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:database/controllers/user_bloc_controller.dart';
 import 'package:database/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,4 +46,29 @@ class ListUsers extends StatelessWidget {
           });
     });
   }
+}
+
+class UserListBloc extends StatelessWidget{
+
+
+
+  UserListBloc({super.key});
+  UserBloc userBloc = UserBloc();
+
+@override
+  Widget build(BuildContext context) {
+    return StreamBuilder 
+    <int>(
+      stream: userBloc.userValue,
+      builder: (context , snapshot) {
+
+        print(snapshot.data);
+        return  Text(snapshot.data.toString());
+      },
+    );
+    
+  }
+
+
+
 }

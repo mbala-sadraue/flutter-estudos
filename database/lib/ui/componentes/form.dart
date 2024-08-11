@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:database/controllers/user_bloc_controller.dart';
 import 'package:database/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class Formulario extends StatelessWidget {
   final userController = Get.put(UserController());
   final imagePickerController = Get.put(ImagePickerController());
   final _formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {

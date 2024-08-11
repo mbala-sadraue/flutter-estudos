@@ -1,3 +1,4 @@
+import 'package:database/controllers/user_bloc_controller.dart';
 import 'package:database/controllers/user_controller.dart';
 import 'package:database/ui/componentes/form.dart';
 import 'package:database/ui/componentes/list_users.dart';
@@ -12,6 +13,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +21,15 @@ class MyApp extends StatelessWidget {
         initialBinding: BindingsBuilder(() {
           Get.put(UserController());
         }),
-        home: const HomePage(title: "Lista"));
+        home:  HomePage(title: "Lista"));
   }
 }
 
 class HomePage extends StatelessWidget {
   final String title;
-  const HomePage({super.key, required this.title});
+   HomePage({super.key, required this.title});
+  final UserBloc userBloc =  UserBloc();
+
 
   void showModalBottomSheet_(BuildContext context) {
     // showModalBottomSheet(
@@ -61,11 +65,12 @@ class HomePage extends StatelessWidget {
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child: ListUsers(),
+        child:UserListBloc(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet_(context);
+          // showModalBottomSheet_(context);
+           userBloc.addUser(1);
         },
         backgroundColor: Colors.white,
         child: const Icon(
