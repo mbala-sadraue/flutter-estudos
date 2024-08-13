@@ -9,11 +9,11 @@ class TarefaRepository{
    TarefaRepository(){
       _tarefas.addAll([
         const Tarefa("Banhar"),
-        const Tarefa("Banhar"),
-        const Tarefa("Banhar"),
-        const Tarefa("Banhar"),
-        const Tarefa("Banhar"),
-        const Tarefa("Banhar"),
+        const Tarefa("Marta"),
+        const Tarefa("Paula"),
+        const Tarefa("Estefhania"),
+        const Tarefa("Luena"),
+        const Tarefa("Pompeu"),
         ]
       );
   }
