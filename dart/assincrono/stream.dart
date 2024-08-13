@@ -10,12 +10,40 @@ import 'dart:async';
  */
 
 
-void main(){
+void main() async {
+
+  var value = countStream(10);
 
   print("Ola stream ");
+  var result = await sumaStream(value);
+  print("Resultado =>  $result");
+
+}
+
+Future<int> sumaStream(Stream<int> stream) async{
+
+int soma = 0;
+    // stream.listen(
+    //   (value){
+
+    //     print("L - $value");
+    //   }
+    // );
+  await for (final value in stream ){
+    soma +=value ; 
+  }
+  // print("$soma");
+  return soma;
+}
+
+Stream<int> countStream(int to) async*{
 
 
- 
+  for (var i = 0; i<= to; i++){
+    // print("object -> $i");
+    yield i;
+  }
+
 }
 
 void criarStreamBase(){
@@ -37,4 +65,19 @@ void criarStreamBase(){
 
   );
   
+}
+
+void criarStreamControllerBasico(){
+  var strealController = StreamController();
+  var stream = strealController.stream;
+  var sink = strealController.sink;
+
+  strealController.add(1);
+  sink.add(2);
+      
+  var subscription = stream.listen(
+    (event){
+      print("Evento $event");
+    }
+  );
 }
