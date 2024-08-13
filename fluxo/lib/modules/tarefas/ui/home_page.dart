@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluxo/modules/tarefas/bloc/tarefa_bloc.dart';
 import 'package:fluxo/modules/tarefas/bloc/tarefa_event.dart';
 import 'package:fluxo/modules/tarefas/bloc/tarefa_sate.dart';
+import 'package:fluxo/modules/tarefas/modules/tarefa.dart';
 
 class HomePageTask extends StatelessWidget {
   final String title;
@@ -28,7 +29,7 @@ class HomePageTask extends StatelessWidget {
             child: StreamBuilder<TarefaState>(
                 stream: tarefaBloc.tarefaState,
                 builder: (context, state) {
-                  if (state is TarefaLoadingState) {
+                  if (state .data is TarefaLoadingState) {
                     print("Entruiu");
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -43,7 +44,7 @@ class HomePageTask extends StatelessWidget {
                             leading: CircleAvatar(
                               child: Text(terefas[index].nome[0]),
                             ),
-                            title: Text("Tarefa ${terefas[0].nome}"),
+                            title: Text("Tarefa ${terefas[index].nome}"),
                           );
                         });
                   }
@@ -59,7 +60,9 @@ class HomePageTask extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          tarefaBloc.inputTarefa.add(PostTarefa(tarefa: Tarefa("Caminhar")));
+        },
       ),
     );
   }

@@ -24,6 +24,7 @@ class TarefaRepository{
 
   Future<List<Tarefa>> postTarefa(Tarefa tarefa){
 
+      _tarefas.add(tarefa);
     return Future.delayed(
      const  Duration(seconds:2 ),
      () => _tarefas
