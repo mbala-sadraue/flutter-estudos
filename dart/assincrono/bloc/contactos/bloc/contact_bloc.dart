@@ -20,6 +20,8 @@ class ContactBloc{
 
  void _mapEventToState(ContactEvent event){
 
+  _outputContactController.add(ContactLoading());
+
   if(event is UpdateContact){
     print("Atualizar o contaco"); 
   }
@@ -32,8 +34,10 @@ class ContactBloc{
     print(event);
      print("get All contaco"); 
   }
-
+    _outputContactController.add(ContactLoaded());
   }
+
+
 
 }
 
