@@ -14,6 +14,26 @@ class ContactBloc{
   Stream<ContactState> get contactState{
     return _outputContactController.stream;
   }
+  ContactBloc(){
+    _inputContactController.stream.listen(_mapEventToState);
+  }
+
+ void _mapEventToState(ContactEvent event){
+
+  if(event is UpdateContact){
+    print("Atualizar o contaco"); 
+  }
+  else if (event is PostContact){
+    print("Criar o contacto");
+  }else if (event is DeleteContanct){
+    print("Apagar o contacto");
+
+  }else{
+    print(event);
+     print("get All contaco"); 
+  }
+
+  }
 
 }
 
