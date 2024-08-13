@@ -1,15 +1,11 @@
 import '../models/contact.dart';
 
 abstract class ContactEvent {
-  final List<Contact> contacts;
 
-  ContactEvent({required this.contacts});
 }
 
 // PEGAR TODOS OS CONTACTOS
-class GetContact extends ContactEvent {
-  GetContact():super(contacts: []);
-}
+class GetContact extends ContactEvent {}
 
 // CRIAR CONTACTO
 class PostContact extends ContactEvent {
@@ -18,7 +14,7 @@ class PostContact extends ContactEvent {
   
   PostContact({
     required this.contact
-  }):super(contacts: []);
+  });
 }
 
 // AUALIZAR CONTACTO
@@ -28,7 +24,7 @@ class UpdateContact extends ContactEvent {
 
   UpdateContact({
     required this.contact
-  }):super(contacts: []);
+  });
 }
 
 // APAGAR CONTACTO
@@ -36,5 +32,5 @@ class DeleteContanct extends ContactEvent {
   final Contact contact;
   DeleteContanct({
     required this.contact
-  }):super(contacts: []);
+  });
 }
