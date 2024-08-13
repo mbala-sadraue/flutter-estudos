@@ -5,18 +5,23 @@ abstract  class TarefaState{
   const TarefaState({ required this.tarefas}); 
 }
 
-// QUANDOINICIAR
+// QUANDO INICIAR
 class TarefaInitialState extends TarefaState{
 TarefaInitialState():super(tarefas: []);
 }
 
+//  QUANDO ESTIVER A PROCESSAR 
 class TarefaLoadingState extends TarefaState{
   TarefaLoadingState():super(tarefas: []);
 }
 
+// QUANDO TERMINAR A PROCESSAR 
+
 class TarefaLoaded extends TarefaState{
   const  TarefaLoaded({ required super.tarefas});
 }
+
+// QUANDO FALHAR
 
 class TarefaErrorState extends TarefaState{
 
