@@ -16,10 +16,27 @@ class HomePageTask extends StatelessWidget{
       return Scaffold(
 
           appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title:  Center(child: Text(title),),
           ),
 
-          body: Text("Lista de Tarefas"),
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 30,
+                  itemBuilder: (context, index){
+              
+              
+                    return ListTile(
+                      leading: CircleAvatar(child: Text("$index"),),
+                      title: Text("Tarefa $index"),
+              
+                    );
+              
+                  }),),
+            ],
+          ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: (){},
