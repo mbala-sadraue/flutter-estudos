@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "120777348651",
+    "project_id": "primeiro-projecto-29316",
+    "storage_bucket": "primeiro-projecto-29316.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120777348651:android:3ea7c6fe1642d5df1bbc6e",
+        "android_client_info": {
+          "package_name": "com.example.banco_fogo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP1FMBMzbq_h7S4KfAk_Kx3JVOfD1oyLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
