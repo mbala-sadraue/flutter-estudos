@@ -6,19 +6,18 @@ class FormLoginController extends GetxController {
   Rx<String> title = 'Seja bem vindo'.obs;
   Rx<String> btnEntar = 'Fazer login'.obs;
   Rx<String> btnStateConta = 'Ainda não tem conta? cadastre-se'.obs;
-  Rx<bool> _isLogin = true.obs;
+  Rx<bool> isLogin = true.obs;
 
   void checkIsLogin() {
-    if (_isLogin.value == true) {
+    if (isLogin.value == false) {
       title.value = 'Seja bem vindo';
       btnEntar.value = 'Fazer login';
       btnStateConta.value = 'Ainda não tem conta? cadastre-se"';
-      _isLogin.value = false;
     }else{
        title.value = 'Criar um conta';
       btnEntar.value = 'Cadastre-se';
       btnStateConta.value = 'Já tens uma conta? Faça login"';
-      _isLogin.value = true;
     }
+      isLogin.value = !isLogin.value;
   }
 }

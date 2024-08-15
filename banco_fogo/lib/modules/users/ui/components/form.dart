@@ -17,7 +17,7 @@ class Formulario extends StatelessWidget {
         title: Center(
           child: Obx(() => TextButton(
                 onPressed: () {},
-                child: Text(formController.title.value),
+                child: Text(formController.title.value,style:TextStyle(color: Colors.white)),
               )),
         ),
       ),
@@ -25,20 +25,33 @@ class Formulario extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 100),
+              padding: EdgeInsets.only(top: 20),
               child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      // const Text(
-                      //   'Seja bem Vindo',
-                      //   style: TextStyle(
-                      //     fontSize: 32,
-                      //     fontWeight: FontWeight.bold,
-                      //     letterSpacing: -1.5
-
-                      //   ),
-                      // ),
+                     Obx(
+                      () => formController.isLogin.value == false?
+                       Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24.0, vertical: 12.0),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Nome'),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Nome é um campo obrigatório";
+                            }
+                            return null;
+                          },
+                        ),
+                      )
+                      
+                      
+                      :SizedBox()
+                     ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 24.0, vertical: 12.0),
