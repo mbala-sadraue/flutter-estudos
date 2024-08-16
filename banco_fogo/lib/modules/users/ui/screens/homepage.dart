@@ -13,7 +13,7 @@ class Homepage extends StatelessWidget {
 
 
       ],),
-      body: Center(child: Obx(() => Text("")),),
+      body: Center(child: Obx(() => Text(authUser?.user?.email??'')),),
     );
   }
 }
