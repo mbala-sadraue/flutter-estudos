@@ -65,12 +65,12 @@ class HomePage extends StatelessWidget {
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child:UserListBloc(),
+        child:ListUsers(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // showModalBottomSheet_(context);
-           userBloc.addUser(1);
+          showModalBottomSheet_(context);
+          //  userBloc.addUser(1);
         },
         backgroundColor: Colors.white,
         child: const Icon(
