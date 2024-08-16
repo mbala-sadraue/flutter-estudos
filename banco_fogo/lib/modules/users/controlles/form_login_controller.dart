@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FormLoginController extends GetxController {
-  // static FormLoginController get to => Get.find();
+ static FormLoginController get to => Get.find();
+ final TextEditingController name = TextEditingController();
+ final TextEditingController email = TextEditingController();
+ final TextEditingController senha = TextEditingController();
 
   Rx<String> title = 'Seja bem vindo'.obs;
   Rx<String> btnEntar = 'Fazer login'.obs;

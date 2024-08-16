@@ -39,6 +39,7 @@ class Formulario extends StatelessWidget {
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Nome'),
+                          controller: formController.name ,
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -59,6 +60,7 @@ class Formulario extends StatelessWidget {
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'e-mail'),
+                            controller: formController.email,
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -74,6 +76,7 @@ class Formulario extends StatelessWidget {
                         child: TextFormField(
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(), labelText: 'Senha'),
+                              controller: formController.senha,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           validator: (value) {
