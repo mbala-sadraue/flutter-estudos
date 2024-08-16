@@ -10,7 +10,7 @@ import 'conta_state.dart';
 class ContaBloc{
   
   final StreamController<ContaEvent> _inputContaEvent = StreamController<ContaEvent>();
-  final StreamController<ContaState> _outputContaState  = StreamController<ContaState>();
+  final StreamController<ContaState> _outputContaState  = StreamController<ContaState>.broadcast();
 
   Sink<ContaEvent> get contaInput =>  _inputContaEvent.sink;
   Stream<ContaState> get contaState => _outputContaState.stream;

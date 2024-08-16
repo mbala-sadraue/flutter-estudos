@@ -9,6 +9,7 @@ void main(){
   final Conta createConta = Conta(nome: 'mbala', number: '935378674', email:'mbala@gmail.com',);
 
   contaBloc.contaInput.add(CreateConta(conta: createConta));
+    contaBloc.contaState.listen((data){});
   contaBloc.contaState.listen(
     (data){
       if(data is ContaLoading ){
