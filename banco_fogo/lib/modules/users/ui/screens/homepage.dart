@@ -9,11 +9,12 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(actions: const [
-
-
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 12, 39, 99),
+        title: const Center(child: Text("Bem vindo",style: TextStyle(color: Colors.white),),),
+        actions: const [
       ],),
-      body: Center(child: Obx(() => Text(authUser?.user?.email??'')),),
+      body: Center(child: Obx(() => Text(authUser.user?.email??'')),),
     );
   }
 }
