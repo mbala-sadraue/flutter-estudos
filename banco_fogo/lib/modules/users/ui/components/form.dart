@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:banco_fogo/modules/users/controlles/form_login_controller.dart';
+import 'package:banco_fogo/shered/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,7 @@ class Formulario extends StatelessWidget {
   Formulario({super.key});
   final _formKey = GlobalKey<FormState>();
   final formController = Get.put(FormLoginController());
+  final authServiceController = Get.put(AuthServiceController());
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,14 @@ class Formulario extends StatelessWidget {
                                       MaterialStateProperty.all<Color>(
                                           Color.fromARGB(255, 12, 39, 99)),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  if(!formController.isLogin.value){
+                                    authServiceController.sigin(formController.email.text, formController.senha.text);
+                                  }else{
+                                    authServiceController.sigin(formController.email.text, formController.senha.text);
+
+                                  }
+                                },
                                 child: Obx(() => Text(
                                       formController.btnEntar.value,
                                       style: TextStyle(color: Colors.white),

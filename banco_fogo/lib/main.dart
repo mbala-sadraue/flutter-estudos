@@ -1,4 +1,5 @@
 import 'package:banco_fogo/config.dart';
+import 'package:banco_fogo/modules/users/ui/components/auth_check.dart';
 import 'package:banco_fogo/modules/users/ui/components/form.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: Formulario(),
+      home: AuthCheck(),
     );
   }
 }
