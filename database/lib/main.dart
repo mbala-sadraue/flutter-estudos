@@ -1,4 +1,3 @@
-import 'package:database/controllers/user_bloc_controller.dart';
 import 'package:database/controllers/user_controller.dart';
 import 'package:database/ui/componentes/form.dart';
 import 'package:database/ui/componentes/list_users.dart';
@@ -28,8 +27,6 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   final String title;
    HomePage({super.key, required this.title});
-  final UserBloc userBloc =  UserBloc();
-
 
   void showModalBottomSheet_(BuildContext context) {
     // showModalBottomSheet(

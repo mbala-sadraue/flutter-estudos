@@ -1,22 +1,38 @@
 import 'dart:io';
-
-import 'package:database/controllers/user_bloc_controller.dart';
 import 'package:database/controllers/user_controller.dart';
+import 'package:database/modules/users/bloc/user_bloc.dart';
+import 'package:database/modules/users/bloc/user_event.dart';
+import 'package:database/modules/users/bloc/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListUsers extends StatelessWidget {
-   ListUsers({super.key});
+   ListUsers({super.key}){
+   
+   }
 
   final userController = Get.put(UserController());
+  final userBloc = UserBloc();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserController>(builder: (_) {
+     userBloc.inputUser.add(UserGet());
+    return StreamBuilder<UserState>(
+      stream: userBloc.userState,
+      builder: (context , snapshot) {
+        if(snapshot.data is UserLoadInProgress){
+          return const  Center(
+            child: RefreshProgressIndicator(),
+          );
+        }else if(snapshot.data  is UserLoadSuccess ){
+
+        
+
+            var users = snapshot.data?.users ?? [];  
       return ListView.builder(
-          itemCount: _.users.length,
+          itemCount: users.length,
           itemBuilder: (context, index) {
-            final user = _.users[index];
+            final user = users[index];
             return ListTile(
               leading:  CircleAvatar(
                 backgroundImage:user.image != null? FileImage(File(user.image!)):null,
@@ -34,7 +50,7 @@ class ListUsers extends StatelessWidget {
                       icon: const Icon(Icons.edit, color: Colors.orange)),
                   IconButton(
                       onPressed: () {
-                         userController.deleteUser(_.users[index].id!);
+                         userController.deleteUser(users[index].id!);
                       },
                       icon: const Icon(
                         Icons.delete,
@@ -44,31 +60,11 @@ class ListUsers extends StatelessWidget {
               ),
             );
           });
+          }else{
+            // return CircularProgressIndicator(color: Colors.red,);
+            return const Center(child:  Text("Erro na aplicação",style: TextStyle(color: Colors.red, fontSize: 25),));
+          }
     });
   }
 }
 
-class UserListBloc extends StatelessWidget{
-
-
-
-  UserListBloc({super.key});
-  UserBloc userBloc = UserBloc();
-
-@override
-  Widget build(BuildContext context) {
-    return StreamBuilder 
-    <int>(
-      stream: userBloc.userValue,
-      builder: (context , snapshot) {
-
-        print(snapshot.data);
-        return  Text(snapshot.data.toString());
-      },
-    );
-    
-  }
-
-
-
-}

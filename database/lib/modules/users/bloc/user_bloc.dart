@@ -29,7 +29,7 @@ class UserBloc{
 
   void _mapEventToState(UserEvent event) async {
     List<User> _users = [];
-    _outputStateController.add(UserInitial());
+    _outputStateController.add(UserLoadInProgress());
 
 
     if(event is UserAdd){
