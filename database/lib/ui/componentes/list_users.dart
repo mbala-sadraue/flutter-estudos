@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListUsers extends StatelessWidget {
-   ListUsers({super.key}){
-   
-   }
+   ListUsers({super.key});
 
   final userController = Get.put(UserController());
   final userBloc = UserBloc();
@@ -34,8 +32,8 @@ class ListUsers extends StatelessWidget {
           itemBuilder: (context, index) {
             final user = users[index];
             return ListTile(
-              leading:  CircleAvatar(
-                backgroundImage:user.image != null? FileImage(File(user.image!)):null,
+              leading: const CircleAvatar(
+                backgroundImage:null,
               ),
               title: Text(user.name),
               subtitle: Text(user.phone),
@@ -50,7 +48,8 @@ class ListUsers extends StatelessWidget {
                       icon: const Icon(Icons.edit, color: Colors.orange)),
                   IconButton(
                       onPressed: () {
-                         userController.deleteUser(users[index].id!);
+                        userBloc.inputUser.add(UserDelete(user: users[index]));
+                        //  userController.deleteUser(users[index].id!);
                       },
                       icon: const Icon(
                         Icons.delete,

@@ -3,6 +3,9 @@ import 'dart:io';
 
 import 'package:database/controllers/user_bloc_controller.dart';
 import 'package:database/controllers/user_controller.dart';
+import 'package:database/models/user.dart';
+import 'package:database/modules/users/bloc/user_bloc.dart';
+import 'package:database/modules/users/bloc/user_event.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +18,7 @@ class Formulario extends StatelessWidget {
   final userController = Get.put(UserController());
   final imagePickerController = Get.put(ImagePickerController());
   final _formKey = GlobalKey<FormState>();
+    final userBloc = UserBloc();
 
 
   @override
@@ -67,8 +71,11 @@ class Formulario extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    userController.userCreate(
-                        nameController.text, phoneController.text,imagePickerController.imagem);
+                    // userController.userCreate(
+                    //     nameController.text, phoneController.text,imagePickerController.imagem);
+
+                    userBloc.inputUser.add(UserAdd(user: User(name: nameController.text,image: '', phone: phoneController.text)));
+                    imagePickerController.imagem = null;
                     nameController.clear();
                     phoneController.clear();
                   }
