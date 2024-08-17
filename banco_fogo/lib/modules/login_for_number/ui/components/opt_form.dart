@@ -7,16 +7,18 @@ import 'package:get/get.dart';
 import '../../controlles/form_login_number_controller.dart';
 
 class OptForm extends StatelessWidget {
-  OptForm({super.key});
+  OptForm({super.key,required this.verificationId});
   final _formKey = GlobalKey<FormState>();
   final formController = Get.put(FormLoginNumberController());
   final authServiceController = Get.put(AuthServiceController());
+  final String verificationId;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
+      body: Center(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,7 +28,18 @@ class OptForm extends StatelessWidget {
                   child: Form(
                     key: _formKey,
                     child: Column(
+                      
                       children: [
+                          Padding(
+                    padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0, vertical: 12.0),
+                  child: Text("Insira o codigo recebido",style: TextStyle(
+                    
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
+                  textAlign:TextAlign.center ,),
+                ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24.0, vertical: 12.0),
@@ -35,11 +48,10 @@ class OptForm extends StatelessWidget {
                                 border: OutlineInputBorder(),
                                 labelText: 'Insera o codigo'),
                             controller: formController.code,
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: true,
+                            keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "o Número é um campo obrigatório";
+                                return "o Codigo um campo obrigatório";
                               }
                               return null;
                             },
@@ -59,13 +71,14 @@ class OptForm extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     if(_formKey.currentState!.validate()){
-                                
+                                      print("object");
+                                       authServiceController.verifyCode(formController.code.text.trim(), verificationId);
                                     }
                                   },
-                                  child: Obx(() => Text(
-                                        formController.btnEntar.value,
+                                  child: Text(
+                                        'verificar',
                                         style: TextStyle(color: Colors.white),
-                                      )),
+                                      ),
                                 ),
                               ],
                             )),

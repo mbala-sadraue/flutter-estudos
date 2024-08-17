@@ -14,7 +14,7 @@ class Homepage extends StatelessWidget {
         title: const Center(child: Text("Bem vindo",style: TextStyle(color: Colors.white),),),
         actions: const [
       ],),
-      body: Center(child: Obx(() => Text(authUser.user?.email??'')),),
+      body: Center(child: Obx(() => Text(authUser.user?.phoneNumber??'')),),
     );
   }
 }

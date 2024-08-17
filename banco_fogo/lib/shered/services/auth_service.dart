@@ -1,3 +1,4 @@
+import 'package:banco_fogo/modules/login_for_number/ui/components/opt_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ class AuthServiceController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   var userIsAuthenticated = false.obs;
   final Rx<User?> _firebaseUser = Rx<User?>(null);
+  Rx<String?> verificationId_ = Rx<String?>(null);
 
   User? get user => _firebaseUser.value;
 
@@ -63,4 +65,37 @@ class AuthServiceController extends GetxController {
       showSnack("Erro ao ao", e.toString());
     }
   }
+  signForNUmber(String number){
+    _auth.verifyPhoneNumber(
+      phoneNumber: number,
+      verificationCompleted: (phoneAuthCredential) {
+        print("Complentado ${phoneAuthCredential.toString()}");
+      },
+      verificationFailed: (error) {
+        print("Erro => ${error.toString()}");
+      },
+      codeSent: (verificationId, forceResendingToken) {
+        verificationId_.value = verificationId;
+        Get.to(() => OptForm(verificationId: verificationId,));
+      }, 
+      codeAutoRetrievalTimeout: (verificationId) {
+        print("codeAutoRetrievalTimeout dois $verificationId");
+      },);
+  //  _auth.signInWithPhoneNumber(number); 
+  }
+
+    void verifyCode(String code,String verificationId ) async{
+
+    try{
+
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: code);
+
+      await _auth.signInWithCredential(credential);
+      
+    }catch(e){
+
+      print(e);
+    }
+  }
+
 }
