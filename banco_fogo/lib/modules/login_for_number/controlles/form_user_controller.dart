@@ -1,12 +1,21 @@
+// ignore_for_file: unused_element
+
+import 'dart:io';
+
+import 'package:banco_fogo/shered/services/auth_service.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class FormUserController extends GetxController {
  static FormUserController get to => Get.find();
  final TextEditingController name = TextEditingController();
  final TextEditingController cidade = TextEditingController();
  final TextEditingController photo = TextEditingController();
- final String? imagem = '';
+ final authServiceController = Get.put(AuthServiceController());
+//  final String? imagem = '';
+XFile? imagem;
 
 
   Rx<String> title = 'Seja bem vindo'.obs;
@@ -27,8 +36,28 @@ class FormUserController extends GetxController {
       isLogin.value = !isLogin.value;
 
   }
+  createUser() async{
+    final nameImage = '${DateTime.now()}.jpg';
+  final imgPath = await _uploadUserImagem(File(imagem!.path),nameImage);
+   await authServiceController.user!.updatePhotoURL(imgPath);
 
-  pickerImagem_(){
+  }
 
+  pickerImagem_() async {
+
+    final imagePicker = ImagePicker();
+    final pickedFile  = await imagePicker.pickImage(source: ImageSource.gallery);
+    if(pickedFile != null){
+      imagem = pickedFile;
+      update();
+    }
+
+  }
+  Future<String?> _uploadUserImagem(File imagem,String nameImg) async {
+    final storage = FirebaseStorage.instance;
+  final uid = authServiceController.user!.uid;
+    final imgRef = storage.ref().child('user_images').child(uid).child(nameImg);
+    imgRef.putFile(imagem).whenComplete((){});
+    return await imgRef.getDownloadURL();
   }
 }

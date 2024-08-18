@@ -15,6 +15,13 @@ class FormUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        },icon: Icon(Icons.arrow_back,color: Colors.white,),),
+        backgroundColor: const Color.fromARGB(255, 12, 39, 99),
+        title: const Center(child: Text("Adicionar outros dados",style: TextStyle(color: Colors.white,fontSize: 16,), textAlign: TextAlign.center,),),
+       ),
         body: Center(
       child:  SingleChildScrollView(
         child: Padding(
@@ -30,7 +37,7 @@ class FormUser extends StatelessWidget {
                   return   Column(
                   children: [
                       CircleAvatar(
-                    backgroundImage:_.imagem != null? FileImage(File(_.imagem!)):null,
+                    backgroundImage:_.imagem != null? FileImage(File(_.imagem!.path)):null,
                      
                       maxRadius: 40,
                     ),
@@ -65,7 +72,7 @@ class FormUser extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    
+                    formController.createUser();
                   },
                   child: const Text("cadastrar"),
                 )
