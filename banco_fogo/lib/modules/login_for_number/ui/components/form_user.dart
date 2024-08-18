@@ -2,12 +2,19 @@
 
 import 'dart:io';
 
+import 'package:banco_fogo/modules/chat/messages/bloc/message_bloc.dart';
+import 'package:banco_fogo/modules/chat/messages/bloc/message_event.dart';
+import 'package:banco_fogo/modules/chat/messages/bloc/message_state.dart';
+import 'package:banco_fogo/modules/chat/messages/models/message_model.dart';
 import 'package:banco_fogo/modules/login_for_number/controlles/form_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FormUser extends StatelessWidget {
-   FormUser({super.key});
+  final messageBloc = MessageBloc(); 
+   FormUser({super.key}){
+      messageBloc.inputMessage.add(FetchMessageData());
+   }
   final _formKey = GlobalKey<FormState>();
   final formController = Get.put(FormUserController());
   // final authServiceController = Get.put(AuthServiceController());
@@ -72,7 +79,8 @@ class FormUser extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    formController.createUser();
+                   messageBloc.inputMessage.add(MessageAdd(message: Message( userId: "userI", text: "Mama estou bem", recipientId: "33i4u", createdAt: DateTime.now())));
+                    print("object 232");
                   },
                   child: const Text("cadastrar"),
                 )

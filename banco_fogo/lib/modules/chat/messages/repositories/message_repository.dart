@@ -17,15 +17,30 @@ class MessageRepository {
     }
   }
 
-  static Future<void> getAll() async {
+  static Future<List<Message>> getAll() async {
     final messagesCollections =
         FirebaseFirestore.instance.collection('messages');
 
     try {
       final messages = await messagesCollections.get();
-      print("Message $messages");
+      final docs = messages.docs;
+      final List<Message> _messages  = [];
+   
+      for (var item in docs ){
+        print(item.data());
+        // _messages.add(
+        //     Message(
+        //       text:item.data()['text'],
+        //       recipientId:item.data()['recipientId'],
+        //       userId: item.data()['userId'],
+        //       createdAt: DateTime.now()
+        //     )
+        // );
+      }
+
+      return _messages;
     } catch (e) {
-      print(" Erro ao envia mensagem $e");
+      return [];
     }
   }
 }

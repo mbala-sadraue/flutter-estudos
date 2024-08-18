@@ -6,7 +6,7 @@ class Message {
   final String recipientId;
 
   const Message({
-    required this.uid,
+    this.uid,
     required this.userId,
     required this.text,
     required this.recipientId,
