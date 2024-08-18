@@ -3,10 +3,12 @@
 import 'dart:io';
 
 import 'package:banco_fogo/shered/services/auth_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class FormUserController extends GetxController {
  static FormUserController get to => Get.find();
@@ -37,9 +39,16 @@ XFile? imagem;
 
   }
   createUser() async{
-    final nameImage = '${DateTime.now()}.jpg';
-  final imgPath = await _uploadUserImagem(File(imagem!.path),nameImage);
-   await authServiceController.user!.updatePhotoURL(imgPath);
+    final storage = FirebaseStorage.instance;
+    CollectionReference usuarios = FirebaseFirestore.instance.collection('usuarios');
+    usuarios.add({'nome':'mbala'}).then(
+      (value){
+        print("Cadastrado com sucesso");
+      }
+    );
+    // final nameImage = '${DateTime.now()}.jpg';
+  // final imgPath = await _uploadUserImagem(File(imagem!.path),nameImage);
+  //  await authServiceController.user!.updatePhotoURL(imgPath);
 
   }
 
@@ -53,11 +62,28 @@ XFile? imagem;
     }
 
   }
-  Future<String?> _uploadUserImagem(File imagem,String nameImg) async {
-    final storage = FirebaseStorage.instance;
-  final uid = authServiceController.user!.uid;
-    final imgRef = storage.ref().child('user_images').child(uid).child(nameImg);
-    imgRef.putFile(imagem).whenComplete((){});
-    return await imgRef.getDownloadURL();
+  Future<String?> _uploadUserImagem(File img,String nameImg) async {
+
+    final status = await Permission.storage.status;
+    if(!status.isGranted){
+      print("Não tem permissão");
+      await Permission.storage.request();
+
+    }
+    final uid = authServiceController.user!.uid;
+    final ref = 'user_images/$nameImg';
+
+    
+    // final imgRef = storage.ref().child('user_images').child(uid).child(nameImg);
+  //   final imgRef = storage.ref().child(nameImg);
+  //   print("Image $img   === $nameImg");
+  //  await  imgRef.putFile(img).whenComplete((){});
+  // final uploadTask = await  storage.ref().child('uploads/mbala.jpg').putFile(img);
+
+
+    //  final storageRef = FirebaseStorage.instance.ref();
+    // final uploadTask = storageRef.child('uploads/${file.name}').putFile(file);
+
+    // return await imgRef.getDownloadURL();
   }
 }
