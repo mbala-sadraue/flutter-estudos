@@ -27,19 +27,22 @@ class MyHomePage extends StatelessWidget {
   final String title;
    MyHomePage({super.key, required this.title});
   
-  final counterBloc = CounterBloc();
+  final counterBloc = CounterBloc()..add(CounterIncrementPressed());
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CounterBloc>(
-      create: (context) => CounterBloc(),
+    return MultiBlocProvider(
+      providers:[
+        BlocProvider(create: (context) => counterBloc)
+      ],
       child: BlocBuilder<CounterBloc, int>(
-        builder: (context, state) {
-
-          final counterBloc = BlocProvider.of<CounterBloc>(context); 
-
-          return Scaffold(
-            body: Center(
+        bloc: counterBloc,
+        builder: (context, state) => Scaffold(
+          appBar:  AppBar(
+            backgroundColor: Colors.pink,
+            title: Center(child: Text(" Bloc ${state.toString()}",style: const TextStyle(color: Colors.white),),),
+          ),
+          body: Center(
               child: Text(state.toString()),
             ),
             floatingActionButton: Column(
@@ -63,9 +66,47 @@ class MyHomePage extends StatelessWidget {
                 )
               ],
             ),
-          );
-        },
-      ),
-    );
+        ),
+       ),
+      ) ;
   }
 }
+
+
+
+
+// BlocProvider<CounterBloc>(
+//       create: (context) =>  counterBloc,
+//       child: BlocBuilder<CounterBloc, int>(
+//         bloc: counterBloc,
+  
+//         builder: (context, state) {
+//           return Scaffold(
+            // body: Center(
+            //   child: Text(state.toString()),
+            // ),
+            // floatingActionButton: Column(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   // crossAxisAlignment: CrossAxisAlignment.end,
+            //   children: [
+            //     FloatingActionButton(
+            //       onPressed: () {
+            //         counterBloc.add(CounterIncrementPressed());
+            //       },
+            //       child: const Icon(Icons.add),
+            //     ),
+            //     const SizedBox(
+            //       height: 20,
+            //     ),
+            //     FloatingActionButton(
+            //       onPressed: () {
+            //        counterBloc.add(CounterDecrementPressed());
+            //       },
+            //       child: const Icon(Icons.remove),
+            //     )
+            //   ],
+            // ),
+//           );
+//         },
+//       ),
+//     );
