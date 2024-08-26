@@ -33,10 +33,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers:[
-        BlocProvider(create: (context) => counterBloc)
+        BlocProvider<CounterBloc>(create: (context) => counterBloc)
       ],
       child: BlocBuilder<CounterBloc, int>(
-        bloc: counterBloc,
+        // bloc: counterBloc,
         builder: (context, state) => Scaffold(
           appBar:  AppBar(
             backgroundColor: Colors.pink,
@@ -71,6 +71,36 @@ class MyHomePage extends StatelessWidget {
       ) ;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
