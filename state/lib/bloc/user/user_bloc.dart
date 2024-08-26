@@ -8,12 +8,36 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UserGetUsersEvent>(_onGetUsers);
   }
 
-  _onGetUsers(UserGetUsersEvent event, Emitter emit) async {
-    Future.delayed(const Duration(seconds: 1));
+  _onGetUsers(UserGetUsersEvent event, Emitter<UserState> emit) async {
+      emit(state.copyWith(isLoading: true));
+    await Future.delayed(const Duration(seconds: 1));
 
     final List<User> users = List.generate(event.count,
         (index) => User(id: index.toString(), name: "user name $index"));
 
     emit(UserLoadSuccess(users: users));
+    emit(state.copyWith(isLoading: false,users: users));
   }
+  _onGetJobs(UserGetUsersEvent event, Emitter<UserState> emit) async {
+      emit(state.copyWith(isLoading: true));
+    await Future.delayed(const Duration(seconds: 1));
+
+    final List<User> users = List.generate(event.count,
+        (index) => User(id: index.toString(), name: "user name $index"));
+
+    emit(UserLoadSuccess(users: users));
+    emit(state.copyWith(isLoading: false,users: users));
+  }
+
+
+
+  //  _onGetUsers(UserGetUsersEvent event, Emitter<UserState> emit) async {
+  //     emit(UserLoadInProgress());
+  //   await Future.delayed(const Duration(seconds: 1));
+
+  //   final List<User> users = List.generate(event.count,
+  //       (index) => User(id: index.toString(), name: "user name $index"));
+
+  //   emit(UserLoadSuccess(users: users));
+  // }
 }
