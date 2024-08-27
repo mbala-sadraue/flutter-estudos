@@ -67,7 +67,8 @@ class MyHomePage extends StatelessWidget {
                 const SizedBox(height: 20,),
                  FloatingActionButton(
                   onPressed: () {
-                    userBloc.add(UserGetUsersJobsEvent(counterBloc.state));
+                    final countUs = context.read<UserBloc>();
+                    countUs.add(UserGetUsersJobsEvent(counterBloc.state));
                   },
                   child: const Icon(Icons.work),
                 ),
@@ -102,11 +103,15 @@ class MyHomePage extends StatelessWidget {
                     bloc: userBloc,
                     builder: (context, state){
           
-                      final users = state.users;
-                       final jobs = state.jobs;
+                      // final users = state.users;
+                      final users = context.watch<UserBloc>().state.users;
+                      //  final jobs = state.jobs;
+                        final jobs = context.watch<UserBloc>().state.jobs;
+                      
                       return Column(
                         children: [
-                        if(state.isLoading)
+                        // if(state.isLoading)
+                        if(context.watch<UserBloc>().state.isLoading)
                            const  CircularProgressIndicator(),
                         if(users.isNotEmpty && state.isLoading == false)
                         ...users.map((e) => Text(e.name)),
@@ -128,6 +133,38 @@ class MyHomePage extends StatelessWidget {
         }
       ),
     );
+  }
+}
+
+class ListUser extends StatelessWidget {
+  const ListUser({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child:  BlocBuilder<UserBloc, UserState>(
+                    // bloc: userBloc,
+                    builder: (context, state){
+          
+                      // final users = state.users;
+                      final users = context.watch<UserBloc>().state.users;
+                      //  final jobs = state.jobs;
+                        final jobs = context.watch<UserBloc>().state.jobs;
+                      
+                      return Column(
+                        children: [
+                        // if(state.isLoading)
+                        if(users.isNotEmpty && state.isLoading == false)
+                        ...users.map((e) => Text(e.name)),
+                        if(users.isEmpty && state.isLoading == false )
+                          const Text("Não tem usuario"),
+                        
+                        ],
+                      );
+          
+                    },
+                  ),
+    ) ;
   }
 }
 
