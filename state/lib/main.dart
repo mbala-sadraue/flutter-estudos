@@ -37,43 +37,77 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<CounterBloc>(create: (context) => counterBloc), BlocProvider(create: (context) => UserBloc())],
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.pink,
-              title: const Center(
-                child: Text(
-                  " Bloc",
-                  style:  TextStyle(color: Colors.white),
-                ),
+      providers: [
+        BlocProvider<CounterBloc>(create: (context) => counterBloc),
+        BlocProvider(create: (context) => UserBloc())
+      ],
+      child: Builder(builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.pink,
+            title: const Center(
+              child: Text(
+                " Bloc",
+                style: TextStyle(color: Colors.white),
               ),
             ),
-            floatingActionButton: Column(
+          ),
+          floatingActionButton: BlocListener<CounterBloc, int>(
+            listener: (context, state) {
+             if(state == 0){
+            //    Scaffold.of(context).showBottomSheet(
+            //     (context) => Container(
+            //       color: Colors.red,
+            //       width: double.infinity,
+            //       height: 40,
+            //       child: const Center(child: Text("Antigiu o lavor zero",style: TextStyle(color: Colors.white),),),
+            //     ),
+            //   );
+            ScaffoldMessenger.of(context).showSnackBar(
+              
+              const SnackBar(duration: Duration(seconds: 1), content: Center(child: Text("Antigiu o lavor zero",style: TextStyle(color: Colors.white),)),)
+            );
+             }
+            },
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               // crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                 FloatingActionButton(
+                FloatingActionButton(
+                  heroTag: "btn1",
                   onPressed: () {
-          
-                     final countUs = context.read<UserBloc>();
-                     countUs.add(UserGetUsersEvent(counterBloc.state));
-          
+                    final countUs = context.read<UserBloc>();
+                    countUs.add(UserGetUsersEvent(counterBloc.state));
+
                     // userBloc.add(UserGetUsersEvent(counterBloc.state));
                   },
                   child: const Icon(Icons.people_alt_outlined),
                 ),
-                const SizedBox(height: 20,),
-                 FloatingActionButton(
+                const SizedBox(
+                  height: 20,
+                ),
+                FloatingActionButton(
+                  heroTag: "btn2",
                   onPressed: () {
                     final countUs = context.read<UserBloc>();
                     countUs.add(UserGetUsersJobsEvent(counterBloc.state));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => BlocProvider.value(
+                          value: countUs,
+                          child: const ListJobs(),
+                        ),
+                      ),
+                    );
                   },
                   child: const Icon(Icons.work),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 FloatingActionButton(
+                  heroTag: "btn3",
                   onPressed: () {
                     counterBloc.add(CounterIncrementPressed());
                   },
@@ -83,6 +117,7 @@ class MyHomePage extends StatelessWidget {
                   height: 20,
                 ),
                 FloatingActionButton(
+                  heroTag: "btn4",
                   onPressed: () {
                     counterBloc.add(CounterDecrementPressed());
                   },
@@ -90,48 +125,24 @@ class MyHomePage extends StatelessWidget {
                 )
               ],
             ),
-            body: Center(
-              child: Column(
-                children: [
-                  BlocBuilder(
-                    bloc: counterBloc,
-                    builder: (context, countState) => Text(
-                      countState.toString(),
-                    ),
+          ),
+          body: Center(
+            child: Column(
+              children: [
+                BlocBuilder(
+                  bloc: counterBloc,
+                  builder: (context, countState) => Text(
+                    countState.toString(),
                   ),
-                  BlocBuilder<UserBloc, UserState>(
-                    bloc: userBloc,
-                    builder: (context, state){
-          
-                      // final users = state.users;
-                      final users = context.watch<UserBloc>().state.users;
-                      //  final jobs = state.jobs;
-                        final jobs = context.watch<UserBloc>().state.jobs;
-                      
-                      return Column(
-                        children: [
-                        // if(state.isLoading)
-                        if(context.watch<UserBloc>().state.isLoading)
-                           const  CircularProgressIndicator(),
-                        if(users.isNotEmpty && state.isLoading == false)
-                        ...users.map((e) => Text(e.name)),
-                        if(users.isEmpty && state.isLoading == false )
-                          const Text("Não tem usuario"),
-                        if(jobs.isNotEmpty && state.isLoading == false)
-                        ...jobs.map((e) => Text(e.name)),
-                        if(jobs.isEmpty && state.isLoading == false )
-                          const Text("Não tem trabalhos")
-                        ],
-                      );
-          
-                    },
-                  )
-                ],
-              ),
+                ),
+                if (context.watch<UserBloc>().state.isLoading)
+                  const CircularProgressIndicator(),
+                const ListUser(),
+              ],
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }),
     );
   }
 }
@@ -142,29 +153,56 @@ class ListUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child:  BlocBuilder<UserBloc, UserState>(
-                    // bloc: userBloc,
-                    builder: (context, state){
-          
-                      // final users = state.users;
-                      final users = context.watch<UserBloc>().state.users;
-                      //  final jobs = state.jobs;
-                        final jobs = context.watch<UserBloc>().state.jobs;
-                      
-                      return Column(
-                        children: [
-                        // if(state.isLoading)
-                        if(users.isNotEmpty && state.isLoading == false)
-                        ...users.map((e) => Text(e.name)),
-                        if(users.isEmpty && state.isLoading == false )
-                          const Text("Não tem usuario"),
-                        
-                        ],
-                      );
-          
-                    },
-                  ),
-    ) ;
+      child: BlocBuilder<UserBloc, UserState>(
+        // bloc: userBloc,
+        builder: (context, state) {
+          // final users = state.users;
+          final users = context.watch<UserBloc>().state.users;
+          return Column(
+            children: [
+              // if(state.isLoading)
+              if (users.isNotEmpty && state.isLoading == false)
+                ...users.map((e) => Text(e.name)),
+              if (users.isEmpty && state.isLoading == false)
+                const Text("Não tem usuario"),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ListJobs extends StatelessWidget {
+  const ListJobs({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text("Trabalhos"),
+        ),
+      ),
+      body: BlocBuilder<UserBloc, UserState>(
+        // bloc: userBloc,
+        builder: (context, state) {
+          final jobs = state.jobs;
+          // final jobs = context.watch<UserBloc>().state.jobs;
+
+          return Column(
+            children: [
+              if (context.watch<UserBloc>().state.isLoading)
+                const CircularProgressIndicator(),
+              if (jobs.isNotEmpty && state.isLoading == false)
+                ...jobs.map((e) => Text(e.name)),
+              if (jobs.isEmpty && state.isLoading == false)
+                const Text("Não tem trabalhos")
+            ],
+          );
+        },
+      ),
+    );
   }
 }
 
