@@ -10,3 +10,11 @@ class UserGetUsersEvent extends UserEvent {
 
   UserGetUsersEvent(this.count);
 }
+
+class UserGetUsersJobsEvent extends UserEvent {
+
+
+  final int count; 
+
+  UserGetUsersJobsEvent(this.count);
+}

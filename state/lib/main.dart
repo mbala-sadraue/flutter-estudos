@@ -37,75 +37,95 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<CounterBloc>(create: (context) => counterBloc)],
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.pink,
-          title: const Center(
-            child: Text(
-              " Bloc",
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          // crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-             FloatingActionButton(
-              onPressed: () {
-                userBloc.add(UserGetUsersEvent(counterBloc.state));
-              },
-              child: const Icon(Icons.people_alt_outlined),
-            ),
-            const SizedBox(height: 20,),
-            FloatingActionButton(
-              onPressed: () {
-                counterBloc.add(CounterIncrementPressed());
-              },
-              child: const Icon(Icons.add),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                counterBloc.add(CounterDecrementPressed());
-              },
-              child: const Icon(Icons.remove),
-            )
-          ],
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              BlocBuilder(
-                bloc: counterBloc,
-                builder: (context, countState) => Text(
-                  countState.toString(),
+      providers: [BlocProvider<CounterBloc>(create: (context) => counterBloc), BlocProvider(create: (context) => UserBloc())],
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.pink,
+              title: const Center(
+                child: Text(
+                  " Bloc",
+                  style:  TextStyle(color: Colors.white),
                 ),
               ),
-              BlocBuilder<UserBloc, UserState>(
-                bloc: userBloc,
-                builder: (context, state){
-
-                  final users = state.users;
-                  return Column(
-                    children: [
-                    if(users.isEmpty  && state.isLoading)
-                       const  CircularProgressIndicator(),
-                    if(users.isNotEmpty && state.isLoading == false)
-                    ...users.map((e) => Text(e.name)),
-                    if(users.isEmpty && state.isLoading == false )
-                      const Text("Não tem dados")
-                    ],
-                  );
-
-                },
-              )
-            ],
-          ),
-        ),
+            ),
+            floatingActionButton: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              // crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                 FloatingActionButton(
+                  onPressed: () {
+          
+                     final countUs = context.read<UserBloc>();
+                     countUs.add(UserGetUsersEvent(counterBloc.state));
+          
+                    // userBloc.add(UserGetUsersEvent(counterBloc.state));
+                  },
+                  child: const Icon(Icons.people_alt_outlined),
+                ),
+                const SizedBox(height: 20,),
+                 FloatingActionButton(
+                  onPressed: () {
+                    userBloc.add(UserGetUsersJobsEvent(counterBloc.state));
+                  },
+                  child: const Icon(Icons.work),
+                ),
+                const SizedBox(height: 20,),
+                FloatingActionButton(
+                  onPressed: () {
+                    counterBloc.add(CounterIncrementPressed());
+                  },
+                  child: const Icon(Icons.add),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    counterBloc.add(CounterDecrementPressed());
+                  },
+                  child: const Icon(Icons.remove),
+                )
+              ],
+            ),
+            body: Center(
+              child: Column(
+                children: [
+                  BlocBuilder(
+                    bloc: counterBloc,
+                    builder: (context, countState) => Text(
+                      countState.toString(),
+                    ),
+                  ),
+                  BlocBuilder<UserBloc, UserState>(
+                    bloc: userBloc,
+                    builder: (context, state){
+          
+                      final users = state.users;
+                       final jobs = state.jobs;
+                      return Column(
+                        children: [
+                        if(state.isLoading)
+                           const  CircularProgressIndicator(),
+                        if(users.isNotEmpty && state.isLoading == false)
+                        ...users.map((e) => Text(e.name)),
+                        if(users.isEmpty && state.isLoading == false )
+                          const Text("Não tem usuario"),
+                        if(jobs.isNotEmpty && state.isLoading == false)
+                        ...jobs.map((e) => Text(e.name)),
+                        if(jobs.isEmpty && state.isLoading == false )
+                          const Text("Não tem trabalhos")
+                        ],
+                      );
+          
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        }
       ),
     );
   }
